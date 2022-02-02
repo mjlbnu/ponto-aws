@@ -1,4 +1,4 @@
-service: handle-many-requests
+service: ponto-demo
 
 provider:
   name: aws
@@ -6,21 +6,21 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-       - sqs:SendMessage
-       - sqs:ReceiveMessage
-       - sqs:DeleteMessage
-       - sqs:GetQueueAttributes
-      Resource: arn:aws:sqs:us-east-1:885121665536:WeatherRequestQueue
+        - sqs:SendMessage
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueAttributes
+      Resource: arn:aws:sqs:us-east-1:619549927047:PontoRequests
 
 functions:
   dequeue:
     handler: handler.dequeue
     events:
       - sqs:
-          arn: arn:aws:sqs:us-east-1:885121665536:WeatherRequestQueue
+          arn: arn:aws:sqs:us-east-1:619549927047:PontoRequests
           batchSize: 1
 
   enqueue:
     handler: handler.enqueue
     events:
-      - http: GET forecast
+      - http: GET ponto
