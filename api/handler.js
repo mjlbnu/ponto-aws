@@ -5,6 +5,7 @@ const sqs = new SQS();
 
 module.exports.dequeue = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
+    console.log("dequeue");
     const ponto = JSON.parse(event.Records[0].body);
     console.log(ponto);
     if (ponto.includedAt && ponto.includedAt.length) {
@@ -18,28 +19,4 @@ module.exports.dequeue = async (event, context, callback) => {
     } else {
       throw new Error("Undefined inputs...")
     } 
-};
-
-module.exports.enqueue = async (event, context, callback) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-  try {
-    console.log(event.queryStringParameters);
-    if (event.queryStringParameters) {
-      const params = {
-        MessageBody: JSON.stringify(event.queryStringParameters),
-        QueueUrl: "https://sqs.us-east-1.amazonaws.com/619549927047/PontoRequests"
-      }
-      const result = await sqs.sendMessage(params).promise();
-      callback(null, {
-        statusCode: 200,
-        body: JSON.stringify(result),
-      })
-    }
-  } catch (e) {
-    console.log(e);
-    callback(null, {
-      statusCode: 500,
-      body: JSON.stringify("Request failed"),
-    })
-  }
 };
