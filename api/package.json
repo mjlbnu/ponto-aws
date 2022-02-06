@@ -12,6 +12,11 @@
   "dependencies": {
     "aws-sdk": "^2.797.0",
     "axios": "^0.21.0",
-    "serverless": "^3.1.0"
+    "serverless": "^2.69.1",
+    "serverless-plugin-lambda-dead-letter": "^1.2.1",
+    "serverless-vpc-discovery": "^3.1.2"
+  },
+  "devDependencies": {
+    "serverless-apigateway-service-proxy": "^1.14.1"
   }
 }
