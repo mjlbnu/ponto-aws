@@ -7,7 +7,7 @@ provider:
   memorySize: 256
   stage: dev
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: 'Allow'
       Action:
         - sqs:SendMessage
         - sqs:ReceiveMessage
@@ -30,7 +30,7 @@ custom:
     - sqs:
         path: /ponto
         method: post
-        queueName: { "Fn::GetAtt": ["SourceQueue", "QueueName"] }
+        queueName: { 'Fn::GetAtt': ['SourceQueue', 'QueueName'] }
         cors: true
         response:
           template:
@@ -41,51 +41,51 @@ custom:
             serverError: |-
               { "message": "there was an error handling your request" }
   vpc:
-    vpcName: "vpc-mjlbnu"
+    vpcName: 'vpc-mjlbnu'
     subnetNames:
-      - "subnet-mjlbnu"
+      - 'subnet-mjlbnu'
     securityGroupNames:
-      - "sg-mjlbnu"
+      - 'sg-mjlbnu'
 
 resources:
   Resources:
     SourceQueue:
-      Type: "AWS::SQS::Queue"
+      Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: SourceQueue
         RedrivePolicy:
           deadLetterTargetArn:
             Fn::GetAtt:
-              - "DeadLetterQueue"
-              - "Arn"
+              - 'DeadLetterQueue'
+              - 'Arn'
           maxReceiveCount: 2
         VisibilityTimeout: 10
     DeadLetterQueue:
-      Type: "AWS::SQS::Queue"
+      Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: DeadLetterQueue
         VisibilityTimeout: 10
   Outputs:
     SourceQueueURL:
-      Description: "URL of source queue"
+      Description: 'URL of source queue'
       Value:
-        Ref: "SourceQueue"
+        Ref: 'SourceQueue'
     SourceQueueARN:
-      Description: "ARN of source queue"
+      Description: 'ARN of source queue'
       Value:
         Fn::GetAtt:
-          - "SourceQueue"
-          - "Arn"
+          - 'SourceQueue'
+          - 'Arn'
     DeadLetterQueueURL:
-      Description: "URL of dead-letter queue"
+      Description: 'URL of dead-letter queue'
       Value:
-        Ref: "DeadLetterQueue"
+        Ref: 'DeadLetterQueue'
     DeadLetterQueueARN:
-      Description: "ARN of dead-letter queue"
+      Description: 'ARN of dead-letter queue'
       Value:
         Fn::GetAtt:
-          - "DeadLetterQueue"
-          - "Arn"
+          - 'DeadLetterQueue'
+          - 'Arn'
 
 plugins:
   - serverless-apigateway-service-proxy
