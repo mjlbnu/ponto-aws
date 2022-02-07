@@ -4,19 +4,19 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "sls deploy",
+    "remove": "sls remove"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.797.0",
-    "axios": "^0.21.0",
-    "serverless": "^2.69.1",
-    "serverless-plugin-lambda-dead-letter": "^1.2.1",
-    "serverless-vpc-discovery": "^3.1.2"
+    "axios": "^0.21.0"
   },
   "devDependencies": {
+    "serverless": "^2.69.1",
+    "serverless-plugin-lambda-dead-letter": "^1.2.1",
+    "serverless-vpc-discovery": "^3.1.2",
     "serverless-apigateway-service-proxy": "^1.14.1"
   }
 }
